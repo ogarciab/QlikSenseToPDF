@@ -1,0 +1,15 @@
+com-qliktech-ScreenShotToPDF.js;
+jspdf.js;
+jspdf.js;
+jspdf.min.js;
+jspdf.debug.js;
+jspdf.plugin.javascript.js;
+jspdf.plugin.addimage.js;
+jspdf.plugin.from_html.js;
+jspdf.plugin.sillysvgrenderer.js;
+jspdf.plugin.split_text_to_size.js;
+jspdf.plugin.standard_fonts_metrics;
+FileSaver.js;
+html2canvas.js;
+com-qliktech-a.qext;
+screenshottopdf.png;
