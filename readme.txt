@@ -1,12 +1,10 @@
-		QlikSense-To-PDF
+QlikSense-To-PDF converts Qlik Sense to PDF Files:
 
-This is a Beta QlikSense Extension that allows to create Qlik Sense Sheets to PDF File format. 
-QlikSense-To-PDF works on the server Side (QlikSense Server).
+QlikSense-To-PDF is a Beta QlikSense Extension that allows to create a PDF File from a Qlik Sense Sheet view.  QlikSense-To-PDF only works for the QlikSense Server. We are still developing this extension , considering for the next iterations the follow features: 
 
-Beta version 0.5 
+-Image rotation: The option of rotating the image taken, in this way it possible to take advantge of the whole A4 PDF Files dimensions.
+-Improve UX: Improve the design and events behaviuor. 
 
-author: Oscar Garcia Bofill
-oscar.garcia@qlik.com
+QlikSense-To-PDF this is the Beta version 0.5. 
 
-QlikTech Iberia
-Consulting Services
+Author:Oscar Garcia Bofill /oscar.garcia@qlik.com (QlikTech Iberia / Consulting Services).
