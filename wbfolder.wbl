@@ -6,7 +6,6 @@ jspdf.debug.js;
 jspdf.plugin.javascript.js;
 jspdf.plugin.addimage.js;
 jspdf.plugin.from_html.js;
-jspdf.plugin.sillysvgrenderer.js;
 jspdf.plugin.split_text_to_size.js;
 jspdf.plugin.standard_fonts_metrics;
 FileSaver.js;

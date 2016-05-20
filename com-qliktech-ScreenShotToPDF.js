@@ -1,5 +1,5 @@
 define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./html2canvas", "./jspdf.plugin.from_html"
-	, "./jspdf.plugin.sillysvgrenderer", "./jspdf.plugin.split_text_to_size", "./jspdf.plugin.standard_fonts_metrics", "./FileSaver"
+	, "./jspdf.plugin.split_text_to_size", "./jspdf.plugin.standard_fonts_metrics", "./FileSaver"
 ],
 
 	function () {
