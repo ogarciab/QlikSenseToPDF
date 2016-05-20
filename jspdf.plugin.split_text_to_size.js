@@ -31,6 +31,7 @@
 /**
 Returns an array of length matching length of the 'word' string, with each
 cell ocupied by the width of the char in that position.
+
 @function
 @param word {String}
 @param widths {Object}
@@ -78,10 +79,13 @@ var getArraySum = function(array){
 }
 /**
 Returns a widths of string in a given font, if the font size is set as 1 point.
+
 In other words, this is "proportional" value. For 1 unit of font size, the length
 of the string will be that much.
+
 Multiply by font size to get actual width in *points*
 Then divide by 72 to get inches or divide by (72/25.6) to get 'mm' etc.
+
 @public
 @function
 @param
@@ -228,8 +232,10 @@ Splits a given string into an array of strings. Uses 'size' value
 (in measurement units declared as default for the jsPDF instance)
 and the font's "widths" and "Kerning" tables, where availabe, to
 determine display length of a given string for a given font.
+
 We use character's 100% of unit size (height) as width when Width
 table or other default width is not available.
+
 @public
 @function
 @param text {String} Unencoded, regular JavaScript (Unicode, UTF-16 / UCS-2) string.

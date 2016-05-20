@@ -1,6 +1,5 @@
 define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./html2canvas", "./jspdf.plugin.from_html"
-	, "./jspdf.plugin.sillysvgrenderer", "./jspdf.plugin.split_text_to_size", "./jspdf.plugin.standard_fonts_metrics"
-	, "./jspdf.min", "./jspdf.debug", "./FileSaver"
+	, "./jspdf.plugin.sillysvgrenderer", "./jspdf.plugin.split_text_to_size", "./jspdf.plugin.standard_fonts_metrics", "./FileSaver"
 ],
 
 	function () {
@@ -43,7 +42,6 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 					return $param;
 				}
 
-
 				$element.find("button").on("qv-activate", function () {
 
 					html2canvas(parseAndHideHtmlTags($("body")), {
@@ -54,13 +52,12 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 
 							//var ctx = canvas.getContext("2d");
 
-							var imgData = canvas.toDataURL('image/jpeg');
-
+							var imgData = canvas.toDataURL('image/jpeg'); 
+														
 							//We scalate the picture to the PDF file A4 size dimensions
 
 							var originalWidth = canvas.width;
 							var originalHeight = canvas.height;
-
 
 							var safeWidth = 210 - 10;
 							var safeHeight = 297 - 10;
@@ -92,9 +89,6 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 						}
 					});
 				});
-
-
 			}
 		};
-
 	});
