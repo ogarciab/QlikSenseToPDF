@@ -1,4 +1,8 @@
-
+/** @preserve 
+jsPDF standard_fonts_metrics plugin
+Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
+MIT license.
+*/
 /**
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -29,7 +33,9 @@
 # only 'uncompress' function is featured lower as JavaScript
 # if you want to unit test "roundtrip", just transcribe the reference
 # 'compress' function from Python into JavaScript
+
 def compress(data):
+
 	keys =   '0123456789abcdef'
 	values = 'klmnopqrstuvwxyz'
 	mapping = dict(zip(keys, values))
@@ -42,6 +48,7 @@ def compress(data):
 		except:
 			keystring = key.join(["'","'"])
 			#print('Keystring is %s' % keystring)
+
 		try:
 			if value < 0:
 				valuestring = hex(value)[3:]
@@ -55,29 +62,41 @@ def compress(data):
 				valuestring = compress(value)
 			else:
 				raise Exception("Don't know what to do with value type %s" % type(value))
+
 		vals.append(keystring+valuestring)
 	
 	return '{' + ''.join(vals) + '}'
+
 def uncompress(data):
+
 	decoded = '0123456789abcdef'
 	encoded = 'klmnopqrstuvwxyz'
 	mapping = dict(zip(encoded, decoded))
+
 	sign = +1
 	stringmode = False
 	stringparts = []
+
 	output = {}
+
 	activeobject = output
 	parentchain = []
+
 	keyparts = ''
 	valueparts = ''
+
 	key = None
+
 	ending = set(encoded)
+
 	i = 1
 	l = len(data) - 1 # stripping starting, ending {}
 	while i != l: # stripping {}
 		# -, {, }, ' are special.
+
 		ch = data[i]
 		i += 1
+
 		if ch == "'":
 			if stringmode:
 				# end of string mode
@@ -90,6 +109,7 @@ def uncompress(data):
 		elif stringmode == True:
 			#print("Adding %s to stringpart" % ch)
 			stringparts.append(ch)
+
 		elif ch == '{':
 			# start of object
 			parentchain.append( [activeobject, key] )
@@ -103,6 +123,7 @@ def uncompress(data):
 			key = None
 			activeobject = parent
 			#DEBUG = False
+
 		elif ch == '-':
 			sign = -1
 		else:
@@ -128,8 +149,11 @@ def uncompress(data):
 					valueparts = ''
 				else:
 					valueparts += ch
+
 			#debug(activeobject)
+
 	return output
+
 */
 
 /**
@@ -260,7 +284,9 @@ var encodingBlock = {
 Resources:
 Font metrics data is reprocessed derivative of contents of
 "Font Metrics for PDF Core 14 Fonts" package, which exhibits the following copyright and license:
+
 Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated. All Rights Reserved.
+
 This file and the 14 PostScript(R) AFM files it accompanies may be used,
 copied, and distributed for any purpose and without charge, with or without
 modification, provided that all copyright notices are retained; that the AFM
@@ -268,6 +294,7 @@ files are not distributed without this file; that all modifications to this
 file or any of the AFM files are prominently noted in the modified file(s);
 and that this paragraph is not modified. Adobe Systems has no responsibility
 or obligation to support the use of the AFM files.
+
 */
 , fontMetrics = {'Unicode':{
 	// all sizing numbers are n/fontMetricsFractionOf = one font size unit
@@ -307,59 +334,36 @@ somewhere around "pdfEscape" call.
 */
 
 API.events.push([ 
-	'addFonts'
-	,function(fontManagementObjects) {
-		// fontManagementObjects is {
-		//	'fonts':font_ID-keyed hash of font objects
-		//	, 'dictionary': lookup object, linking ["FontFamily"]['Style'] to font ID
-		//}
-		var font
-		, fontID
-		, metrics
+	'addFont'
+	,function(font) {
+		var metrics
 		, unicode_section
 		, encoding = 'Unicode'
-		, encodingBlock
+		, encodingBlock;
 
-		for (fontID in fontManagementObjects.fonts){
-			if (fontManagementObjects.fonts.hasOwnProperty(fontID)) {
-				font = fontManagementObjects.fonts[fontID]
+		metrics = fontMetrics[encoding][font.PostScriptName];
+		if (metrics) {
+			if (font.metadata[encoding]) {
+				unicode_section = font.metadata[encoding];
+			} else {
+				unicode_section = font.metadata[encoding] = {};
+			}
 
-				// // we only ship 'Unicode' mappings and metrics. No need for loop.
-				// // still, leaving this for the future.
+			unicode_section.widths = metrics.widths;
+			unicode_section.kerning = metrics.kerning;
+		}
 
-				// for (encoding in fontMetrics){
-				// 	if (fontMetrics.hasOwnProperty(encoding)) {
+		encodingBlock = encodings[encoding][font.PostScriptName];
+		if (encodingBlock) {
+			if (font.metadata[encoding]) {
+				unicode_section = font.metadata[encoding];
+			} else {
+				unicode_section = font.metadata[encoding] = {};
+			}
 
-						metrics = fontMetrics[encoding][font.PostScriptName]
-						if (metrics) {
-							if (font.metadata[encoding]) {
-								unicode_section = font.metadata[encoding]
-							} else {
-								unicode_section = font.metadata[encoding] = {}
-							}
-
-							unicode_section.widths = metrics.widths
-							unicode_section.kerning = metrics.kerning
-						}
-				// 	}
-				// }
-				// for (encoding in encodings){
-				// 	if (encodings.hasOwnProperty(encoding)) {
-						encodingBlock = encodings[encoding][font.PostScriptName]
-						if (encodingBlock) {
-							if (font.metadata[encoding]) {
-								unicode_section = font.metadata[encoding]
-							} else {
-								unicode_section = font.metadata[encoding] = {}
-							}
-
-							unicode_section.encoding = encodingBlock
-							if (encodingBlock.codePages && encodingBlock.codePages.length) {
-								font.encoding = encodingBlock.codePages[0]
-							}
-						}
-				// 	}
-				// }
+			unicode_section.encoding = encodingBlock;
+			if (encodingBlock.codePages && encodingBlock.codePages.length) {
+				font.encoding = encodingBlock.codePages[0];
 			}
 		}
 	}
