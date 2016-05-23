@@ -4,6 +4,50 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 
 	function () {
 		'use strict';
+		
+		var pageFormats = {
+			'a3': [297, 420],
+			'a4': [210, 297],
+			'a5': [148, 210]
+		};
+		
+		var downloadPdf = {
+			ref: "downloadPdfButtonText",
+			type: "string",
+			label: "Download PDF button text"
+		};
+		var pageOrientation = {
+			ref: "pageOrientation",
+			type: "string",
+			component: "dropdown",
+			label: "Page Orientation",
+			options: [{
+				value: "p",
+				label: "Portrait"
+			}, {
+				value: "l",
+				label: "Landscape"
+			}],
+			defaultValue: "p"
+		};
+		var pageFormat = {
+			ref: "pageFormat",
+			type: "string",
+			component: "dropdown",
+			label: "Page Format",
+			options: [{
+				value: "a3",
+				label: "A3"
+			}, {
+				value: "a4",
+				label: "A4"
+			}, {
+				value: "a5",
+				label: "A5"
+			}],
+			defaultValue: "a4"
+		};
+		
 		return {
 			definition: {
 				type: "items",
@@ -12,11 +56,15 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 					appearancePanel: {
 						uses: "settings",
 						items: {
-							DownloadPdfButtonText: {
-								ref: "downloadPdfButtonText",
-								type: "string",
-								label: "Download PDF button text"
-							}
+							pdfExportOptions:{
+								type: "items",
+								label: "Export Options",
+								items:{
+									downloadPdf : downloadPdf,
+									pageOrientation: pageOrientation,
+									pageFormat: pageFormat
+								}
+							}	
 						}
 					}
 				}
@@ -58,9 +106,18 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 
 							var originalWidth = canvas.width;
 							var originalHeight = canvas.height;
-
-							var safeWidth = 210 - 10;
-							var safeHeight = 297 - 10;
+							
+							var selectedOrientation = layout.pageOrientation
+							var selectedPageFormat = layout.pageFormat
+							
+							if (selectedOrientation == 'l') {
+								var safeWidth = pageFormats[selectedPageFormat][1] - 10;
+								var safeHeight = pageFormats[selectedPageFormat][0] - 10;
+							}
+							else{
+								var safeWidth = pageFormats[selectedPageFormat][0] - 10;
+								var safeHeight = pageFormats[selectedPageFormat][1] - 10;
+							}
 
 							var scaleWidth = originalWidth / safeWidth;
 							var scaleHeight = originalHeight / safeHeight;
@@ -78,7 +135,7 @@ define(["./jspdf", "./jspdf.plugin.javascript", "./jspdf.plugin.addimage", "./ht
 								heightt = originalHeight / scaleHeight;
 							}
 							//we create 	
-							var doc = new jsPDF();
+							var doc = new jsPDF(selectedOrientation, 'mm', selectedPageFormat);
 
 							doc.addImage(imgData, 'JPEG', 5, 5, withh, heightt, "ScreenShot", "SLOW", 180);
 							//We get the TimeStamp in order to save the PDF file 
