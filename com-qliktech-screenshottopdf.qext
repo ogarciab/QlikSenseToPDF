@@ -2,6 +2,7 @@
 	"name" : "ScreenShot to PDF File",
 	"description" : "This extensions allows to take a screenshot from the current sheet in order to get a  PDF File",
 	"preview": "./screenshottopdf.png",
+	"icon": "extension",
 	"type" : "visualization",
 	"version": "0.1 Beta",
 	"author": "OGA"
