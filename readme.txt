@@ -8,4 +8,4 @@ is to develop the follow features:
 -Improve UX: Improve the design and events behaviour.
 
 Contact Details:
-Oscar Garcia Bofill / oscar.garcia@agilos.com (Agilos Solutions)
+Oscar Garcia Bofill / oscar.garcia.bofill@gmail.com
